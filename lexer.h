@@ -3,12 +3,13 @@
 #include <cstdio>
 #include <string>
 #include "lookaheadStream.h"
+#include "trie.h"
 using namespace std;
 class lexer {
 
 public:
 	enum TokenType {
-		SEMI, PLUS, MINUS, TIMES, DIVIDE, ASSIGN, EQ, GR, LS, LP, RP, NUM, ID, NA
+		SEMI, PLUS, MINUS, TIMES, DIVIDE, ASSIGN, EQ, GR, LS, LP, RP, NUM, ID, NA, IF, THEN, WHILE, DO
 	};
 	
 	typedef struct token {
@@ -23,6 +24,7 @@ public:
 private:
 	lookaheadStream _ls;
 	token _curToken;
+	trie<TokenType> _keywords;
 	
 public:
 	token currentToken();

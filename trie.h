@@ -24,6 +24,7 @@ public:
 	void reset ();
 	void input (char);
 	T getSD ();
+	bool validState();
 };
 
 //implementation is in the header file to handle templates
@@ -72,4 +73,8 @@ template<class T> void trie<T>::input (char c) {
 
 template<class T> T trie<T>::getSD () {
 	return _stateData[_curState];
+}
+
+template<class T> bool trie<T>::validState () {
+	return getSD != _defaultData;
 }
