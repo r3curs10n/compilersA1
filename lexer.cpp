@@ -39,6 +39,8 @@ void lexer::advance(){
 	
 	if (c==EOF){
 		eof = true;
+		_curToken.type = lexer::EOI;
+		_curToken.value = ":=";
 		return;
 	}
 	
