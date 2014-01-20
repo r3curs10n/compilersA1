@@ -28,10 +28,13 @@ bool lexer::validToken(){
 }
 
 lexer::token lexer::at(int p){
+
+	if (p==0) return _curToken;
+
 	int offset=0;
 	token t(NA, "", _curToken.lineNumber);
 	
-	for (int i=0; i<=p; i++){
+	for (int i=0; i<p; i++){
 		int c;
 		
 		while ((c=_ls.at(offset))!=EOF && isspace((char)c)){
@@ -52,28 +55,28 @@ lexer::token lexer::at(int p){
 			continue;
 		}
 	
-		if (_ls.match("+", 1)){
+		if (_ls.match("+", offset)){
 			t.type = lexer::PLUS;
 			t.value = "+";
 			offset += 1;
 			continue;
 		}
 	
-		if (_ls.match("(")){
+		if (_ls.match("(", offset)){
 			t.type = lexer::LP;
 			t.value = "(";
 			offset += 1;
 			continue;
 		}
 	
-		if (_ls.match(")")){
+		if (_ls.match(")", offset)){
 			t.type = lexer::RP;
 			t.value = ")";
 			offset += 1;
 			continue;
 		}
 	
-		if (_ls.match(";")){
+		if (_ls.match(";", offset)){
 			t.type = lexer::SEMI;
 			t.value = ";";
 			offset += 1;
@@ -126,11 +129,9 @@ lexer::token lexer::at(int p){
 
 void lexer::advance(){
 	int c;
-	cout<<"----"<<endl;
 	while ((c=_ls.peek())!=EOF && isspace((char)c)){
 		if (c=='\n') _curToken.lineNumber++;
 		_ls.next();
-		cout<<"lkjljljljljljljljlkjljl"<<endl;
 	}
 	
 	//TODO: integrate symbols into trie based matching
@@ -173,7 +174,6 @@ void lexer::advance(){
 	}
 	
 	if (c>='0' && c<='9'){
-		cout<<"jjjjjjjjjj"<<endl;
 		//number
 		stringstream s;
 		while ((c=_ls.peek())>='0' && c<='9' && c!=EOF){
@@ -188,7 +188,6 @@ void lexer::advance(){
 	if (isalpha(c)){
 		//id or keyword
 		_keywords.refresh();
-		cout<<"esfsdfsf"<<endl;
 		stringstream s;
 		while ((c=_ls.peek())!=EOF && isalpha(c)){
 			s.put(c);
@@ -208,7 +207,7 @@ void lexer::advance(){
 		_curToken.value = s.str();
 		return;
 	}
-	cout<<"----||"<<(char)c<<endl;
+	
 	_curToken.type = lexer::NA;
 	_curToken.value = "";
 }

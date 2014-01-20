@@ -7,6 +7,8 @@ using namespace std;
 int main(){
 	ifstream f("tst");
 	lexer l(f);
+	cout<<l.at(3).value<<l.at(4).value<<endl;
+	return 0;
 	while (!l.eof){
 		cout<<l.currentToken().value<<(int)l.currentToken().type<<endl;
 		//return 0;
