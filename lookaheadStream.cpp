@@ -42,7 +42,7 @@ int lookaheadStream::next(){
 }
 
 bool lookaheadStream::match (string s){
-	match (s, 0);
+	return match (s, 0);
 }
 
 bool lookaheadStream::match (string s, int offset){
