@@ -17,5 +17,6 @@ public:
 	int next();
 	
 	bool match(string s);
+	bool match(string s, int offset);
 	bool matchAndConsume(string s);
 };

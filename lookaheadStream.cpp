@@ -42,9 +42,13 @@ int lookaheadStream::next(){
 }
 
 bool lookaheadStream::match (string s){
-	if (!this->exists(s.length()-1)) return false;
+	match (s, 0);
+}
+
+bool lookaheadStream::match (string s, int offset){
+	if (!this->exists(offset + s.length()-1)) return false;
 	for (int i=0; i<s.length(); i++){
-		if (s[i]!=this->at(i)) return false;
+		if (s[i]!=this->at(offset + i)) return false;
 	}
 	return true;
 }
