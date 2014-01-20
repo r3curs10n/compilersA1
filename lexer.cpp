@@ -27,12 +27,110 @@ bool lexer::validToken(){
 	return _curToken.type != lexer::NA;
 }
 
+lexer::token lexer::at(int p){
+	int offset=0;
+	token t(NA, "", _curToken.lineNumber);
+	
+	for (int i=0; i<=p; i++){
+		int c;
+		
+		while ((c=_ls.at(offset))!=EOF && isspace((char)c)){
+			if (c=='\n') t.lineNumber++;
+			offset++;
+		}
+		
+		if (c==EOF){
+			t.type = lexer::EOI;
+			t.value = "";
+			continue;
+		}
+	
+		if (_ls.match(":=", offset)){
+			t.type = lexer::ASSIGN;
+			t.value = ":=";
+			offset += 2;
+			continue;
+		}
+	
+		if (_ls.match("+", 1)){
+			t.type = lexer::PLUS;
+			t.value = "+";
+			offset += 1;
+			continue;
+		}
+	
+		if (_ls.match("(")){
+			t.type = lexer::LP;
+			t.value = "(";
+			offset += 1;
+			continue;
+		}
+	
+		if (_ls.match(")")){
+			t.type = lexer::RP;
+			t.value = ")";
+			offset += 1;
+			continue;
+		}
+	
+		if (_ls.match(";")){
+			t.type = lexer::SEMI;
+			t.value = ";";
+			offset += 1;
+			continue;
+		}
+		
+		if (c>='0' && c<='9'){
+			//number
+			stringstream s;
+			while ((c=_ls.at(offset))>='0' && c<='9' && c!=EOF){
+				s.put((char)c);
+				offset++;
+			}
+			t.type = lexer::NUM;
+			t.value = s.str();
+			continue;
+		}
+	
+		if (isalpha(c)){
+			//id or keyword
+			_keywords.refresh();
+		
+			stringstream s;
+			while ((c=_ls.at(offset))!=EOF && isalpha(c)){
+				s.put(c);
+				_keywords.input(c);
+				offset++;
+			}
+		
+			//if token is a valid keyword
+			if (_keywords.validState()){
+				t.type = _keywords.getSD();
+				t.value = s.str();
+				continue;
+			}
+		
+			//token is an id
+			t.type = lexer::ID;
+			t.value = s.str();
+			continue;
+		}
+	
+		t.type = lexer::NA;
+		t.value = "";
+		
+	}
+	
+	return t;
+}
+
 void lexer::advance(){
 	int c;
-	
+	cout<<"----"<<endl;
 	while ((c=_ls.peek())!=EOF && isspace((char)c)){
 		if (c=='\n') _curToken.lineNumber++;
 		_ls.next();
+		cout<<"lkjljljljljljljljlkjljl"<<endl;
 	}
 	
 	//TODO: integrate symbols into trie based matching
@@ -40,7 +138,7 @@ void lexer::advance(){
 	if (c==EOF){
 		eof = true;
 		_curToken.type = lexer::EOI;
-		_curToken.value = ":=";
+		_curToken.value = "";
 		return;
 	}
 	
@@ -75,6 +173,7 @@ void lexer::advance(){
 	}
 	
 	if (c>='0' && c<='9'){
+		cout<<"jjjjjjjjjj"<<endl;
 		//number
 		stringstream s;
 		while ((c=_ls.peek())>='0' && c<='9' && c!=EOF){
@@ -89,7 +188,7 @@ void lexer::advance(){
 	if (isalpha(c)){
 		//id or keyword
 		_keywords.refresh();
-		
+		cout<<"esfsdfsf"<<endl;
 		stringstream s;
 		while ((c=_ls.peek())!=EOF && isalpha(c)){
 			s.put(c);
@@ -109,7 +208,7 @@ void lexer::advance(){
 		_curToken.value = s.str();
 		return;
 	}
-	
+	cout<<"----||"<<(char)c<<endl;
 	_curToken.type = lexer::NA;
 	_curToken.value = "";
 }

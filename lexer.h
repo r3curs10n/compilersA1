@@ -32,4 +32,5 @@ public:
 	lexer(istream& _fs);
 	bool eof;
 	bool validToken();
+	token at(int);
 };

@@ -76,5 +76,5 @@ template<class T> T trie<T>::getSD () {
 }
 
 template<class T> bool trie<T>::validState () {
-	return getSD != _defaultData;
+	return getSD() != _defaultData;
 }
