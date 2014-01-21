@@ -33,4 +33,5 @@ public:
 	bool eof;
 	bool validToken();
 	token at(int);
+	bool matches(TokenType);
 };
