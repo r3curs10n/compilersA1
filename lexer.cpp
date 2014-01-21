@@ -8,7 +8,7 @@ using namespace std;
 lexer::token::token(lexer::TokenType t, string v, int l): type(t), value(v), lineNumber(l){
 }
 
-lexer::token::set(lexer::TokenType t, string v){
+void lexer::token::set(lexer::TokenType t, string v){
 	this->type = t;
 	this->value = v;
 }
@@ -95,6 +95,31 @@ lexer::token lexer::at(int p){
 			t.type = lexer::SEMI;
 			t.value = ";";
 			offset += 1;
+			continue;
+		}
+		
+		if (_ls.matchAndConsume("*")){
+			_curToken.set(lexer::TIMES, "*");
+			continue;
+		}
+	
+		if (_ls.matchAndConsume("/")){
+			_curToken.set(lexer::DIVIDES, "/");
+			continue;
+		}
+	
+		if (_ls.matchAndConsume("<")){
+			_curToken.set(lexer::LS, "<");
+			continue;
+		}
+	
+		if (_ls.matchAndConsume(">")){
+			_curToken.set(lexer::GR, ">");
+			continue;
+		}
+	
+		if (_ls.matchAndConsume("=")){
+			_curToken.set(lexer::EQ, "=");
 			continue;
 		}
 		
@@ -185,6 +210,31 @@ void lexer::advance(){
 	if (_ls.matchAndConsume(";")){
 		_curToken.type = lexer::SEMI;
 		_curToken.value = ";";
+		return;
+	}
+	
+	if (_ls.matchAndConsume("*")){
+		_curToken.set(lexer::TIMES, "*");
+		return;
+	}
+	
+	if (_ls.matchAndConsume("/")){
+		_curToken.set(lexer::DIVIDES, "/");
+		return;
+	}
+	
+	if (_ls.matchAndConsume("<")){
+		_curToken.set(lexer::LS, "<");
+		return;
+	}
+	
+	if (_ls.matchAndConsume(">")){
+		_curToken.set(lexer::GR, ">");
+		return;
+	}
+	
+	if (_ls.matchAndConsume("=")){
+		_curToken.set(lexer::EQ, "=");
 		return;
 	}
 	
