@@ -1,1 +1,1 @@
-va + vb + vc+(vd+ve+(vg+rt+));
+va + vb + vc+(vd+ve+(vg+rt));

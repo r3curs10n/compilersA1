@@ -1,3 +1,5 @@
+#ifndef H_LEXER
+#define H_LEXER
 #include <iostream>
 #include <istream>
 #include <cstdio>
@@ -35,3 +37,4 @@ public:
 	token at(int);
 	bool matches(TokenType);
 };
+#endif

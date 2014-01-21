@@ -1,3 +1,5 @@
+#ifndef H_TRIE
+#define H_TRIE
 #include <iostream>
 #include <string>
 using namespace std;
@@ -78,3 +80,4 @@ template<class T> T trie<T>::getSD () {
 template<class T> bool trie<T>::validState () {
 	return getSD() != _defaultData;
 }
+#endif
