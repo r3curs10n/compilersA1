@@ -11,7 +11,7 @@ class lexer {
 
 public:
 	enum TokenType {
-		SEMI, PLUS, MINUS, TIMES, DIVIDE, ASSIGN, EQ, GR, LS, LP, RP, NUM, ID, NA, EOI, IF, THEN, WHILE, DO
+		SEMI, PLUS, MINUS, TIMES, DIVIDE, ASSIGN, EQ, GR, LS, LP, RP, NUM, ID, NA, EOI, IF, THEN, WHILE, DO, BEGIN, END
 	};
 	
 	typedef struct token {

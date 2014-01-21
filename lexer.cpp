@@ -15,6 +15,8 @@ lexer::lexer (istream& _fs):_ls(_fs), _curToken(lexer::NA, "", 0), _keywords(lex
 	_keywords.insert("then", lexer::THEN);
 	_keywords.insert("while", lexer::WHILE);
 	_keywords.insert("do", lexer::DO);
+	_keywords.insert("begin", lexer::BEGIN);
+	_keywords.insert("end", lexer::END);
 	
 	advance();
 }
