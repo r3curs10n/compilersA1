@@ -1,3 +1,5 @@
+#ifndef H_LAS
+#define H_LAS
 #include <deque>
 #include <istream>
 #include <string>
@@ -20,3 +22,4 @@ public:
 	bool match(string s, int offset);
 	bool matchAndConsume(string s);
 };
+#endif

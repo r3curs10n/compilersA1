@@ -27,6 +27,14 @@ bool lexer::validToken(){
 	return _curToken.type != lexer::NA;
 }
 
+bool lexer::matches(lexer::TokenType t){
+	if (t == _curToken.type){
+		advance();
+		return true;
+	}
+	return false;
+}
+
 lexer::token lexer::at(int p){
 
 	if (p==0) return _curToken;
