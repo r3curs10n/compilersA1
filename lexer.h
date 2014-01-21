@@ -20,7 +20,7 @@ public:
 		int lineNumber;
 		
 		token(TokenType, string, int);
-		
+		set(TokenType, string);
 	} token;
 
 private:

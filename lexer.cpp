@@ -8,6 +8,11 @@ using namespace std;
 lexer::token::token(lexer::TokenType t, string v, int l): type(t), value(v), lineNumber(l){
 }
 
+lexer::token::set(lexer::TokenType t, string v){
+	this->type = t;
+	this->value = v;
+}
+
 lexer::lexer (istream& _fs):_ls(_fs), _curToken(lexer::NA, "", 0), _keywords(lexer::NA){
 	eof = false;
 	
