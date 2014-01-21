@@ -5,8 +5,8 @@
 using namespace std;
 
 #define MAXSTATES 5000
-#define BEGIN 1
-#define REJ 0
+#define TRIE_BEGIN 1
+#define TRIE_REJ 0
 
 template <class T> class trie {
 
@@ -38,9 +38,9 @@ template<class T> trie<T>::trie (T defaultData): _defaultData(defaultData){
 template<class T> void trie<T>::reset () {
 	fill (_stateData, _stateData+MAXSTATES, _defaultData);
 	for (int i=0; i<MAXSTATES; i++){
-		fill (_dfa[i], _dfa[i]+26, REJ);
+		fill (_dfa[i], _dfa[i]+26, TRIE_REJ);
 	}
-	_curState = BEGIN;
+	_curState = TRIE_BEGIN;
 	_newState = 2;
 }
 
@@ -51,8 +51,8 @@ template<class T> int trie<T>::newState() {
 
 template<class T> void trie<T>::insert (string s, T tag) {
 	int i=0;
-	int state = BEGIN;
-	while (i<s.length() && _dfa[state][s[i]-'a']!=REJ){
+	int state = TRIE_BEGIN;
+	while (i<s.length() && _dfa[state][s[i]-'a']!=TRIE_REJ){
 		state = _dfa[state][s[i]-'a'];
 		i++;
 	}
@@ -66,7 +66,7 @@ template<class T> void trie<T>::insert (string s, T tag) {
 }
 
 template<class T> void trie<T>::refresh (){
-	_curState = BEGIN;
+	_curState = TRIE_BEGIN;
 }
 
 template<class T> void trie<T>::input (char c) {
