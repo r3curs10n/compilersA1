@@ -158,9 +158,9 @@ void term(){
 		//variable
 		term();
 	} else if (l->matches(lexer::TIMES)){
-		term();
+		aterm();
 	} else if (l->matches(lexer::DIVIDES)){
-		term();
+		aterm();
 	} else if (l->matches(lexer::LP)){
 		expr_math();
 		if (l->matches(lexer::RP)){
