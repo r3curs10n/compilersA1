@@ -13,7 +13,7 @@ void lexer::token::set(lexer::TokenType t, string v){
 	this->value = v;
 }
 
-lexer::lexer (istream& _fs):_ls(_fs), _curToken(lexer::NA, "", 0), _keywords(lexer::NA){
+lexer::lexer (istream& _fs):_ls(_fs), _curToken(lexer::NA, "", 0), e(lexer::NA, "", 0), _keywords(lexer::NA){
 	eof = false;
 	
 	_keywords.insert("if", lexer::IF);
@@ -36,6 +36,7 @@ bool lexer::validToken(){
 
 bool lexer::matches(lexer::TokenType t){
 	if (t == _curToken.type){
+		e = _curToken;
 		advance();
 		return true;
 	}

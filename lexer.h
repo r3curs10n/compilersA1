@@ -29,6 +29,7 @@ private:
 	trie<TokenType> _keywords;
 	
 public:
+	token e;
 	token currentToken();
 	void advance();
 	lexer(istream& _fs);
