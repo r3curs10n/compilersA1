@@ -10,7 +10,6 @@ void term();
 void expr();
 void expr_math();
 void opt_statements();
-void termp();
 void factor();
 lexer* l;
 
@@ -106,17 +105,25 @@ void expr(){
 	} else {
 		//simple math expression
 	}
+	
 	fexit("expr");
 }
 
 void expr_math(){
 	fenter("expr_math");
+
 	term();
-	if (l->matches(lexer::PLUS)){
-		expr_math();
-	} else if (l->matches(lexer::MINUS)){
-		expr_math();
+	while (true){
+		if (l->matches(lexer::PLUS)){
+			term();
+		}
+		else if (l->matches(lexer::MINUS)){
+			term();
+		} else {
+			break;
+		}
 	}
+	
 	fexit("expr_math");
 }
 
@@ -124,23 +131,18 @@ void term(){
 	fenter("term");
 	
 	factor();
-	termp();
 	
-	fexit("term");
-}
-
-void termp(){
-	fenter("termp");
-	
-	if (l->matches(lexer::TIMES)){
-		factor();
-		termp();
-	} else if (l->matches(lexer::DIVIDES)){
-		factor();
-		termp();
+	while (true){
+		if (l->matches(lexer::TIMES)){
+			factor();
+		} else if (l->matches(lexer::DIVIDES)){
+			factor();
+		} else {
+			break;
+		}
 	}
 	
-	fexit("termp");
+	fexit("term");
 }
 
 void factor(){
