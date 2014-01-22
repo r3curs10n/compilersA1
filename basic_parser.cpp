@@ -10,7 +10,8 @@ void term();
 void expr();
 void expr_math();
 void opt_statements();
-void aterm();
+void termp();
+void factor();
 lexer* l;
 
 int indent=0;
@@ -110,7 +111,7 @@ void expr(){
 
 void expr_math(){
 	fenter("expr_math");
-	aterm();
+	term();
 	if (l->matches(lexer::PLUS)){
 		expr_math();
 	} else if (l->matches(lexer::MINUS)){
@@ -119,26 +120,42 @@ void expr_math(){
 	fexit("expr_math");
 }
 
-void aterm(){
-	fenter("aterm");
+void term(){
+	fenter("term");
 	
-	//term is necessary
-	if (l->matches(lexer::NUM)){
-		//plain number
-		term();
-	} else if (l->matches(lexer::ID)){
-		//variable
-		term();
-	} else if (l->matches(lexer::TIMES)){
-		term();
+	factor();
+	termp();
+	
+	fexit("term");
+}
+
+void termp(){
+	fenter("termp");
+	
+	if (l->matches(lexer::TIMES)){
+		factor();
+		termp();
 	} else if (l->matches(lexer::DIVIDES)){
-		term();
+		factor();
+		termp();
+	}
+	
+	fexit("termp");
+}
+
+void factor(){
+	fenter("factor");
+	
+	if (l->matches(lexer::ID)){
+		//
+	} else if (l->matches(lexer::NUM)){
+		//
 	} else if (l->matches(lexer::LP)){
 		expr_math();
 		if (l->matches(lexer::RP)){
-			term();
+			//
 		} else {
-			cout<<"errorTerm"<<endl;
+			cout<<"error"<<endl;
 			exit(0);
 		}
 	} else {
@@ -146,31 +163,7 @@ void aterm(){
 		exit(0);
 	}
 	
-	fexit("aterm");
-}
-
-void term(){
-	fenter("term");
-	if (l->matches(lexer::NUM)){
-		//plain number
-		term();
-	} else if (l->matches(lexer::ID)){
-		//variable
-		term();
-	} else if (l->matches(lexer::TIMES)){
-		aterm();
-	} else if (l->matches(lexer::DIVIDES)){
-		aterm();
-	} else if (l->matches(lexer::LP)){
-		expr_math();
-		if (l->matches(lexer::RP)){
-			term();
-		} else {
-			cout<<"errorTerm"<<endl;
-			exit(0);
-		}
-	}
-	fexit("term");
+	fexit("factor");
 }
 
 /*void statements(){
